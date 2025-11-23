@@ -1,8 +1,6 @@
-// src/api/loans.api.js
 import axios from "axios";
 
-// Si ya usas una URL base en tasks.api.js, copia la misma:
-const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 export const getLoansRequest = () => axios.get(`${API}/loans`);
 

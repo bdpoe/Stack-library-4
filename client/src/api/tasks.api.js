@@ -1,22 +1,21 @@
 import axios from "axios";
 
-export const getTaskRequest = async (task) => //varias tareas
-  await axios.get("http://localhost:4000/tasks");
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
+export const getTaskRequest = async () => 
+  await axios.get(`${API}/tasks`);
 
 export const createTaskRequest = async (task) => 
-  await axios.post("http://localhost:4000/tasks", task);
+  await axios.post(`${API}/tasks`, task);
 
 export const deleteTaskRequest = async (id) => 
-  await axios.delete(`http://localhost:4000/tasks/${id}`);
+  await axios.delete(`${API}/tasks/${id}`);
 
-export const getTasksRequest = async (id) => //una tarea 
-  await axios.get(`http://localhost:4000/tasks/${id}`);
+export const getTasksRequest = async (id) => 
+  await axios.get(`${API}/tasks/${id}`);
 
-export const updateTaskRequest = async (id, newFields) => //editar tarea
-  await axios.put(`http://localhost:4000/tasks/${id}`, newFields);
+export const updateTaskRequest = async (id, newFields) =>
+  await axios.put(`${API}/tasks/${id}`, newFields);
 
-export const toggleTaskDoneRequest = async (id, done) => //el estado
-  await axios.put(`http://localhost:4000/tasks/${id}`,{
-    done,
-  } );
+export const toggleTaskDoneRequest = async (id, done) =>
+  await axios.put(`${API}/tasks/${id}`, { done });

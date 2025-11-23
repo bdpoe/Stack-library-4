@@ -1,11 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
-
-// https://vite.dev/config/
+// 🔥 Evita uso de binarios nativos de Rollup que fallan en Railway
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    react()],
-})
+    react(),
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
+});

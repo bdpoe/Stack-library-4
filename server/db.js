@@ -28,4 +28,7 @@ else {
   console.log("🖥 Conectado a MySQL local");
 }
 
-export { pool };
+export { pool };   
+
+
+

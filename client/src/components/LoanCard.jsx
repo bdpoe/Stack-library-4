@@ -56,7 +56,7 @@ function LoanCard({ loan, onDelete }) {
       </p>
 
       {/* 🔒 SOLO BIBLIOTECARIO VE ESTOS BOTONES */}
-      {user?.role === "librarian" && (
+      {user?.role === "admin" && (
         <div className="flex justify-end gap-2 mt-2">
           <Link
             to={`/loans/edit/${loan.id}`}

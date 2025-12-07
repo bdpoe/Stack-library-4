@@ -1,11 +1,11 @@
 import { pool } from "../db.js";
 
 export const login = async (req, res) => {
-  const { name, password } = req.body;
+  const { name, password } = req.body;  // "name" viene del frontend
 
   try {
     const [rows] = await pool.query(
-      "SELECT id, name, role FROM users WHERE name = ? AND password = ?",
+      "SELECT id, username AS name, role FROM users WHERE username = ? AND password = ?",
       [name, password]
     );
 

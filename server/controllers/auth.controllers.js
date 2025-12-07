@@ -1,12 +1,12 @@
 import { pool } from "../db.js";
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { name, password } = req.body;  // 👈 CAMBIO AQUÍ
 
   try {
     const [rows] = await pool.query(
       "SELECT id, username, role FROM users WHERE username = ? AND password = ?",
-      [username, password]
+      [name, password]   // 👈 CAMBIO AQUÍ
     );
 
     if (rows.length === 0) {
@@ -19,7 +19,3 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
-
-
-
-

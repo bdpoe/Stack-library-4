@@ -1,12 +1,12 @@
 import { pool } from "../db.js";
 
 export const login = async (req, res) => {
-  const { name, password } = req.body;  // 👈 CAMBIO AQUÍ
+  const { name, password } = req.body;
 
   try {
     const [rows] = await pool.query(
-      "SELECT id, username, role FROM users WHERE username = ? AND password = ?",
-      [name, password]   // 👈 CAMBIO AQUÍ
+      "SELECT id, name, role FROM users WHERE name = ? AND password = ?",
+      [name, password]
     );
 
     if (rows.length === 0) {

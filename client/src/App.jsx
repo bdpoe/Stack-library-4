@@ -43,9 +43,15 @@ function AppRoutes() {
             !user ? (
               <Navigate to="/login" />
             ) : user.role === "librarian" ? (
-              <LoansPage /> // Home del bibliotecario
+              <>
+                {/* Home del bibliotecario */}
+                <LoansPage />
+              </>
             ) : (
-              <TasksPage /> // Home del estudiante
+              <>
+                {/* Home del estudiante */}
+                <TasksPage />
+              </>
             )
           }
         />

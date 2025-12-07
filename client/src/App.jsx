@@ -12,7 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import LoansPage from "./pages/LoansPage";
 import LoanForm from "./pages/LoanForm";
 
-// 🔒 Rutas protegidas solo para bibliotecarios
+// RUTA PROTEGIDA SOLO PARA BIBLIOTECARIO
 function LibrarianRoute({ children }) {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" />;
@@ -20,19 +20,14 @@ function LibrarianRoute({ children }) {
   return children;
 }
 
-// 🔒 Rutas protegidas para cualquier usuario autenticado
-function PrivateRoute({ children }) {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" />;
-  return children;
-}
-
+// TODAS LAS RUTAS
 function AppRoutes() {
   const { user } = useAuth();
 
   return (
     <TaskContextProvider>
       <Routes>
+
         {/* LOGIN */}
         <Route path="/login" element={<LoginPage />} />
 
@@ -43,25 +38,16 @@ function AppRoutes() {
             !user ? (
               <Navigate to="/login" />
             ) : user.role === "librarian" ? (
-              <LoansPage />
+              <TasksPage />
             ) : (
               <TasksPage />
             )
           }
         />
 
-        {/* 📚 LIBROS (TASKS) */}
+        {/* NUEVO LIBRO (Task) */}
         <Route
-          path="/tasks"
-          element={
-            <PrivateRoute>
-              <TasksPage />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/tasks/new"
+          path="/new"
           element={
             <LibrarianRoute>
               <TasksForm />
@@ -69,8 +55,9 @@ function AppRoutes() {
           }
         />
 
+        {/* EDITAR LIBRO */}
         <Route
-          path="/tasks/edit/:id"
+          path="/edit/:id"
           element={
             <LibrarianRoute>
               <TasksForm />
@@ -78,7 +65,7 @@ function AppRoutes() {
           }
         />
 
-        {/* 📖 PRÉSTAMOS (solo bibliotecario) */}
+        {/* LOANS */}
         <Route
           path="/loans"
           element={
@@ -108,6 +95,7 @@ function AppRoutes() {
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />
+
       </Routes>
     </TaskContextProvider>
   );
@@ -116,14 +104,14 @@ function AppRoutes() {
 function App() {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-gradient-to-bfrom-amber-50 via-amber-100 to-stone-100 text-slate-800 flex flex-col">
+      <div className="min-h-screen bg-gradient-to-bfrom-amber-100 via-amber-200 to-amber-50 text-amber-900 flex flex-col">
         <Navbar />
 
         <div className="flex-growcontainer mx-auto px-4 md:px-10 py-8">
           <AppRoutes />
         </div>
 
-        <footer className="text-center py-4 text-stone-500 text-xs md:text-sm border-t border-amber-100 bg-white/70 backdrop-blur"></footer>
+        <footer className="text-center py-4 text-amber-600 text-xs md:text-sm border-t border-amber-300 bg-white/60 backdrop-blur"></footer>
       </div>
     </AuthProvider>
   );

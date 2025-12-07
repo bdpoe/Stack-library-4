@@ -7,70 +7,51 @@ function TaskCard({ task }) {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const isLibrarian = user?.role === "librarian";
-  const isPrestado = Number(task.done) === 1;
+  const handleDone = async () => {
+    await toggleTaskDone(task.id);
+  };
 
   return (
-    <div className="bg-white rounded-2xl border border-amber-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-200 p-4">
-      {/* Header */}
+    <div className="bg-white border border-amber-300 rounded-xl shadow p-4">
       <header className="flex justify-between items-start mb-2">
-        <h2 className="text-base md:text-lg font-semibold text-amber-900">
+        <h2 className="text-lg font-bold text-amber-800">
           {task.title}
         </h2>
-
-        {/* Estado del libro */}
-        <span
-          className={`text-xs font-semibold px-2 py-1 rounded-full ${
-            isPrestado
-              ? "bg-rose-100 text-rose-700"
-              : "bg-emerald-100 text-emerald-700"
-          }`}
-        >
-          {isPrestado ? "Prestado" : "Disponible"}
+        <span className="text-xl">
+          {task.done == 1 ? "📗" : "📕"}
         </span>
       </header>
 
-      {/* Descripción */}
-      <p className="text-sm text-stone-700 mb-1">{task.description}</p>
-      <span className="block text-[11px] text-stone-400 mb-3">
-        {task.createdAt}
-      </span>
+      <p className="text-sm text-amber-700 mb-3">{task.description}</p>
 
-      <div className="flex gap-2 items-center">
-        {/* SOLO BIBLIOTECARIO: CRUD COMPLETO */}
-        {isLibrarian && (
+      <div className="flex gap-2">
+
+        {/* CRUD SOLO BIBLIOTECARIO */}
+        {user?.role === "librarian" && (
           <>
             <button
-              className="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-medium py-1.5 rounded-full text-xs md:text-sm transition-colors"
+              className="flex-1 bg-red-500 text-white py-1.5 rounded-lg"
               onClick={() => deleteTask(task.id)}
             >
               Eliminar
             </button>
 
             <button
-              className="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-medium py-1.5 rounded-full text-xs md:text-sm transition-colors"
-              onClick={() => navigate(`/tasks/edit/${task.id}`)}
+              className="flex-1 bg-amber-700 text-white py-1.5 rounded-lg"
+              onClick={() => navigate(`/edit/${task.id}`)}
             >
               Editar
-            </button>
-
-            <button
-              className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-1.5 rounded-full text-xs md:text-sm transition-colors"
-              onClick={() => toggleTaskDone(task.id)}
-            >
-              {isPrestado ? "Marcar disponible" : "Marcar prestado"}
             </button>
           </>
         )}
 
-        {/* ALUMNO: solo texto informativo */}
-        {!isLibrarian && (
-          <p className="text-xs text-stone-500 italic">
-            {isPrestado
-              ? "Este libro está prestado."
-              : "Este libro está disponible."}
-          </p>
-        )}
+        {/* CAMBIAR ESTADO */}
+        <button
+          className="flex-1 bg-green-600 text-white py-1.5 rounded-lg"
+          onClick={handleDone}
+        >
+          {task.done == 1 ? "Disponible" : "Prestado"}
+        </button>
       </div>
     </div>
   );
